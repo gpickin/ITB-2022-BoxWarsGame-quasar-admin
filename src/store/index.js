@@ -1,9 +1,10 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-// import example from './module-example'
+import appstate from "./appstate";
+import questions from "./questions";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 /*
  * If not building with SSR mode, you can
@@ -14,16 +15,15 @@ Vue.use(Vuex)
  * with the Store instance.
  */
 
-export default function (/* { ssrContext } */) {
-  const Store = new Vuex.Store({
-    modules: {
-      // example
-    },
+const store = new Vuex.Store({
+  modules: {
+    appstate,
+    questions,
+  },
 
-    // enable strict mode (adds overhead!)
-    // for dev mode only
-    strict: process.env.DEBUGGING
-  })
+  // enable strict mode (adds overhead!)
+  // for dev mode only
+  strict: process.env.DEBUGGING,
+});
 
-  return Store
-}
+export default store;

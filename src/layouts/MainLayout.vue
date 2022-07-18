@@ -1,109 +1,104 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
-        />
+	<q-layout view="lHh Lpr lFf">
+		<q-header>
+			<q-toolbar>
+				<q-toolbar-title>
+					Dev Feud - Admin
+					<q-chip
+						size="sm"
+						round
+						color=""
+						v-if="!(getEnvironment === 'prod')"
+						>{{ getEnvironment }}</q-chip
+					>
+				</q-toolbar-title>
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      content-class="bg-grey-1"
-    >
-      <q-list>
-        <q-item-label
-          header
-          class="text-grey-8"
-        >
-          Essential Links
-        </q-item-label>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
-
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-  </q-layout>
+				<q-btn
+					@click="rightDrawerOpen = !rightDrawerOpen"
+					flat
+					round
+					dense
+					icon="menu"
+				/>
+			</q-toolbar>
+		</q-header>
+		<q-drawer
+			v-model="rightDrawerOpen"
+			:content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
+			side="right"
+		>
+			<q-list :content-class="'bg-grey-1'">
+				<q-item clickable @click.native="$router.push('/dashboard')">
+					<q-item-section avatar>
+						<q-icon name="fas fa-tachometer-alt" />
+					</q-item-section>
+					<q-item-section>
+						<q-item-label>Dashboard</q-item-label>
+					</q-item-section>
+				</q-item>
+				<q-item clickable @click.native="$router.push('/questions')">
+					<q-item-section avatar>
+						<q-icon name="fas fa-laptop-code" />
+					</q-item-section>
+					<q-item-section>
+						<q-item-label>Manage Questions</q-item-label>
+					</q-item-section>
+				</q-item>
+				<q-item clickable @click="logout()">
+					<q-item-section avatar>
+						<q-icon name="fas fa-sign-out-alt" />
+					</q-item-section>
+					<q-item-section>
+						<q-item-label>Logout</q-item-label>
+					</q-item-section>
+				</q-item>
+			</q-list>
+		</q-drawer>
+		<q-page-container>
+			<router-view />
+		</q-page-container>
+	</q-layout>
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue'
-
-const linksData = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
-
-export default {
-  name: 'MainLayout',
-  components: {
-    EssentialLink
-  },
-  data () {
-    return {
-      leftDrawerOpen: false,
-      essentialLinks: linksData
-    }
-  }
-}
+	export default {
+		name: "MainLayout",
+		data() {
+			return {
+				rightDrawerOpen: true,
+			};
+		},
+		computed: {
+			getEnvironment() {
+				return process.env.environment;
+			},
+			isLoggedIn() {
+				return this.$store.getters["appstate/isLoggedIn"];
+			},
+		},
+		methods: {
+			logout() {
+				this.$store.commit("appstate/logoutUser", "");
+				this.$router.push("/");
+			},
+		},
+	};
 </script>
+
+<style>
+	.q-expansion-item-sub-item {
+		padding: 0px;
+		border-top-style: solid;
+		border-top-width: 1px;
+		border-top-color: #b2b2b2;
+		border-bottom-style: solid;
+		border-bottom-width: 1px;
+		border-bottom-color: #ffffff;
+		background-color: #eaeaea;
+	}
+
+	.checkbox {
+		max-width: 40px;
+		padding-left: 35px;
+	}
+</style>

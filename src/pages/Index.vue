@@ -1,15 +1,14 @@
 <template>
-  <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-vertical.svg"
-      style="width: 200px; height: 200px"
-    >
-  </q-page>
+	<div></div>
 </template>
 
+<style></style>
+
 <script>
-export default {
-  name: 'PageIndex'
-}
+	export default {
+		name: "IndexPageRedirector",
+		beforeMount() {
+			this.$router.push({ path: `dashboard` });
+		},
+	};
 </script>
