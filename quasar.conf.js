@@ -45,16 +45,11 @@ module.exports = function (ctx) {
       env: ctx.dev
         ? {
             environment: "dev",
-            API: "http://127.0.0.1:54006/api/v1/",
-          }
-        : process.env.BUILDTYPE == "prod"
-        ? {
-            environment: "prod",
-            API: "http://swarm1.cloudgq.com:8004/api/v1",
+            API: "http://127.0.0.1:54001/api/v1/",
           }
         : {
-            environment: "stg",
-            API: "http://swarm1.cloudgq.com:8004/api/v1",
+            environment: "prod",
+            API: "http://swarm1.cloudgq.com:8401/api/v1",
           },
       vueRouterMode: "hash", // available values: 'hash', 'history'
 
@@ -86,7 +81,7 @@ module.exports = function (ctx) {
     // Full list of options: https://v1.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
     devServer: {
       https: false,
-      port: 8080,
+      port: 54002,
       open: true, // opens browser window automatically
     },
 
