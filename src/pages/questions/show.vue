@@ -84,6 +84,7 @@
 								:error="$v.newAnswer.newAnswer.$invalid"
 								error-message="Please enter a Valid Answer"
 								:bottom-slots="true"
+								@keyup.enter="saveNewAnswer()"
 							/>
 						</div>
 						<div class="col-3 q-px-sm">
@@ -97,6 +98,7 @@
 								:error="$v.newAnswer.bulkVotes.$invalid"
 								error-message="Bulk votes must be between 0 and 999"
 								:bottom-slots="true"
+								@keyup.enter="saveNewAnswer()"
 							>
 							</q-input>
 						</div>
